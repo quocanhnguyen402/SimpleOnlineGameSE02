@@ -41,8 +41,10 @@ AppAsset::register($this);
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+//        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+//        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = '<li><a href="javascript:void(0);" onclick="signup();return false;">Signup</a></li>';
+        $menuItems[] = '<li><a href="javascript:void(0);" onclick="login();return false;">Login</a></li>';
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
@@ -65,6 +67,8 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true"></div>
+        <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true"></div>
         <?= $content ?>
     </div>
 </div>
@@ -78,6 +82,36 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<script>
+    function login(){
+        $.ajax({
+            type:'POST',
+            url:'<?= Yii::$app->urlManager->createUrl(["site/login"]); ?>',
+            success: function(data)
+            {
+                $('#loginModal').html(data);
+                $('#loginModal').modal();
+            }
+        });
+    }
+    function signup(){
+        $.ajax({
+            type:'POST',
+            url:'<?= Yii::$app->urlManager->createUrl(["site/signup"]); ?>',
+            success: function(data)
+            {
+                $('#signupModal').html(data);
+                $('#signupModal').modal();
+            }
+        });
+    }
+</script>
+<style>
+    .modal-open {
+        padding-right: 0px !important;
+        overflow-y: auto;
+    }
+</style>
 </body>
 </html>
 <?php $this->endPage() ?>

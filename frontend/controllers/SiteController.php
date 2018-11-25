@@ -87,14 +87,23 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+
+        // dùng để validate modal
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
+        {
+            Yii::$app->response->format = 'json';
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
             $model->password = '';
 
-            return $this->render('login', [
+            return $this->renderAjax('_login', [
                 'model' => $model,
             ]);
+
         }
     }
 
@@ -151,6 +160,11 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
+        {
+            Yii::$app->response->format = 'json';
+            return \yii\widgets\ActiveForm::validate($model);
+        }
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -159,7 +173,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('signup', [
+        return $this->renderAjax('_signup', [
             'model' => $model,
         ]);
     }
