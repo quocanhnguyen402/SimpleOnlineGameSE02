@@ -11,6 +11,7 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+$this->title = 'SimpleGameOnline';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -28,18 +29,18 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+    $logoArea = Html::a('SimpleGameOnline' . '<span class="dotcom">.com</span>', [Yii::$app->homeUrl], ['class' => 'logo']);
+    $describe = Html::tag('div', 'Wish you have fun time!', ['class' => 'w3-right describe-hide-small w3-wide toptext']);
+    echo Html::tag('div', $logoArea . $describe, ['class' => 'w3-container top']);
+    ?>
+    <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => '<span class="fa fa-home">&nbsp;Home Page</span>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'nav-custom w3-card-2',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
     if (Yii::$app->user->isGuest) {
 //        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
 //        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -50,7 +51,7 @@ AppAsset::register($this);
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
+                ['class' => 'logout']
             )
             . Html::endForm()
             . '</li>';
@@ -62,24 +63,41 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
+    <?php if (1 == 0) { ?>
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true"></div>
-        <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true"></div>
-        <?= $content ?>
     </div>
+    <?php } ?>
+
+    <?php if(!Yii::$app->user->isGuest) { ?>
+    <div class="side-bar">
+        <div class="title">
+            <div class="expand">
+                <div class="btn-expand">
+                    <div class="btn-expand-content"></div>
+                    <div class="btn-expand-content"></div>
+                    <div class="btn-expand-content"></div>
+                </div>
+                <div class="side-bar-title">Danh sách Bạn bè</div>
+            </div>
+        </div>
+        <div class="list">
+
+            <?php echo  $this->render('_friend-list') ?>
+
+        </div>
+        <div class="side-bar-footer"></div>
+    </div>
+    <?php } ?>
+
+    <?= $content ?>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true"></div>
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true"></div>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 <script>
@@ -105,6 +123,51 @@ AppAsset::register($this);
             }
         });
     }
+</script>
+<script>
+    $('.btn-expand').on('click', function (e) {
+        $('side-bar').css('top', $(document).scroll())
+        if($('.side-bar').css('width') != '280px') {
+            $('.side-bar').css('width', '280px');
+            $('.site-body').css('margin-left', '280px');
+        } else {
+            $('.side-bar').css('width', '60px');
+            $('.site-body').css('margin-left', '60px');
+        }
+    })
+    $('.list').css('height', ($('.side-bar').height() - 93 - 125) + 'px');
+    window.addEventListener('resize', function(event) {
+        if($('body').scrollTop() < 125) {
+            $('.list').css('height', ($('.side-bar').height() - 93 - (125 - $('body').scrollTop())) + 'px');
+        } else {
+            $('.list').css('height', ($('.side-bar').height() - 93) + 'px');
+        }
+    });
+    window.addEventListener('click', function(event) {
+        if(!event.target.matches('#w0-collapse')){
+            $('.navbar').attr('style', '');
+        }
+    });
+    var lastScrollTop = 0;
+    $('body').scroll(function(){
+        var st = $(this).scrollTop();
+        if(st < 125) {
+            $('.navbar').attr('style', '');
+            $('.side-bar').css('top', (125 - st) + 'px');
+            $('.list').css('height', ($('.side-bar').height() - 93 - (125 - st)) + 'px');
+        } else {
+            if (st < lastScrollTop){
+                // upscroll code
+                $('.navbar').attr('style', 'top: 0; position: absolute');
+            } else {
+                // downscroll code
+                $('.navbar').attr('style', '');
+            }
+            $('.side-bar').css('top', '0');
+            $('.list').css('height', ($('.side-bar').height() - 93) + 'px');
+        }
+        lastScrollTop = st;
+    });
 </script>
 <style>
     .modal-open {
