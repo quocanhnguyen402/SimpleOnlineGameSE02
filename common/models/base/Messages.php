@@ -42,20 +42,12 @@ class Messages extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common\messages\vi', 'ID'),
-            'from_id' => Yii::t('common\messages\vi', 'From ID'),
-            'to_id' => Yii::t('common\messages\vi', 'To ID'),
-            'message_body' => Yii::t('common\messages\vi', 'Message Body'),
-            'created_at' => Yii::t('common\messages\vi', 'Created At'),
+            'id' => Yii::t('vi', 'ID'),
+            'from_id' => Yii::t('vi', 'From ID'),
+            'to_id' => Yii::t('vi', 'To ID'),
+            'message_body' => Yii::t('vi', 'Message Body'),
+            'created_at' => Yii::t('vi', 'Created At'),
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     * @return \common\models\base\MessagesQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new \common\models\base\MessagesQuery(get_called_class());
-    }
 }

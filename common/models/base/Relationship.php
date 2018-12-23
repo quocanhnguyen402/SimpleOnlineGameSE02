@@ -42,21 +42,13 @@ class Relationship extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common\messages\vi', 'ID'),
-            'user_id' => Yii::t('common\messages\vi', 'User ID'),
-            'other_id' => Yii::t('common\messages\vi', 'Other ID'),
-            'status' => Yii::t('common\messages\vi', 'Status'),
-            'created_at' => Yii::t('common\messages\vi', 'Created At'),
-            'updated_at' => Yii::t('common\messages\vi', 'Updated At'),
+            'id' => Yii::t('vi', 'ID'),
+            'user_id' => Yii::t('vi', 'User ID'),
+            'other_id' => Yii::t('vi', 'Other ID'),
+            'status' => Yii::t('vi', 'Status'),
+            'created_at' => Yii::t('vi', 'Created At'),
+            'updated_at' => Yii::t('vi', 'Updated At'),
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     * @return \common\models\base\Relationship the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new \common\models\base\Relationship(get_called_class());
-    }
 }
