@@ -7,11 +7,14 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\widgets\ListView;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use common\models\Relationship;
 
 AppAsset::register($this);
 $this->title = 'SimpleGameOnline';
+$listFriend = Relationship::getFriendsList();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -47,6 +50,7 @@ $this->title = 'SimpleGameOnline';
         $menuItems[] = '<li><a href="javascript:void(0);" onclick="signup();return false;">Signup</a></li>';
         $menuItems[] = '<li><a href="javascript:void(0);" onclick="login();return false;">Login</a></li>';
     } else {
+        $menuItems[] = '<li>' . '<a class="no-padding" href="profile"><div class="avatar"><img src="https://png.pngtree.com/svg/20161027/service_default_avatar_182956.png"></div>' . '</li></a>';
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -86,7 +90,7 @@ $this->title = 'SimpleGameOnline';
         </div>
         <div class="list">
 
-            <?php echo  $this->render('_friend-list') ?>
+            <?php echo  $this->render('_friend-list', ['listFriend' => $listFriend]) ?>
 
         </div>
         <div class="side-bar-footer"></div>
@@ -129,10 +133,10 @@ $this->title = 'SimpleGameOnline';
         $('side-bar').css('top', $(document).scroll())
         if($('.side-bar').css('width') != '280px') {
             $('.side-bar').css('width', '280px');
-            $('.site-body').css('margin-left', '280px');
+            // $('.site-body').css('margin-right', '280px');
         } else {
             $('.side-bar').css('width', '60px');
-            $('.site-body').css('margin-left', '60px');
+            // $('.site-body').css('margin-right', '60px');
         }
     })
     $('.list').css('height', ($('.side-bar').height() - 93 - 125) + 'px');
