@@ -2,6 +2,7 @@
 /* @var $model \common\models\User */
 
 $this->registerCssFile('@web/css/profile.css', ['depends' => [common\assets\AdminLte::className()]]);
+$this->registerJsFile('@web/js/profile.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class="profile-body">
@@ -12,7 +13,7 @@ $this->registerCssFile('@web/css/profile.css', ['depends' => [common\assets\Admi
                 <?php echo $this->render( '_info_score' ) ?>
             </div>
             <div class="col-md-5">
-                <?php echo $this->render( '_info_friend_request' ) ?>
+                <?php echo $this->render( '_info_friend' ) ?>
             </div>
         </div>
     </div>

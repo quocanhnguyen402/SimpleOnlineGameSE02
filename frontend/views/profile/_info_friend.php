@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 ?>
-<div class="col-md-12 table-responsive">
+<div class="col-md-12 table-responsive info-friend">
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3>

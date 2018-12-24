@@ -6,9 +6,6 @@
 .btn-avatar{
     margin-top: 10px;
 }
-.btn-save{
-    display: none;
-}
 .profile-container{
     width: 85%;
     height: 500px;
@@ -34,7 +31,9 @@
 }
 .table-cell{
     display: table-cell;
+    vertical-align: middle;
 }
 .table-row{
     display: table-row;
+    height: 38px;
 }

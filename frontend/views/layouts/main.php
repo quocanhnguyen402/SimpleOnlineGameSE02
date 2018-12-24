@@ -50,7 +50,7 @@ $listFriend = Relationship::getFriendsList();
         $menuItems[] = '<li><a href="javascript:void(0);" onclick="signup();return false;">Signup</a></li>';
         $menuItems[] = '<li><a href="javascript:void(0);" onclick="login();return false;">Login</a></li>';
     } else {
-        $menuItems[] = '<li>' . '<a class="no-padding" href="profile"><div class="avatar"><img src="https://png.pngtree.com/svg/20161027/service_default_avatar_182956.png"></div>' . '</li></a>';
+        $menuItems[] = '<li>' . '<a class="no-padding" href="/profile"><div class="avatar"><img src="https://png.pngtree.com/svg/20161027/service_default_avatar_182956.png"></div>' . '</li></a>';
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

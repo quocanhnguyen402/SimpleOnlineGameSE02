@@ -5,6 +5,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use common\models\User;
 
 /* @var $model User */
@@ -33,6 +34,12 @@ class ProfileController extends Controller
                     return Yii::$app->response->redirect(['site/login']);
                 },
             ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'edit-profile'      => ['post'],
+                ],
+            ],
         ];
     }
 
@@ -60,14 +67,30 @@ class ProfileController extends Controller
      */
     public function actionIndex($identify = 0)
     {
+        $key = '';
         if($identify == 0) {
-            $identify = Yii::$app->user->identity->id;
+            $identify = Yii::$app->user->identity->getId();
         }
         $model = $this->findModel($identify);
+
+        if(Yii::$app->request->isAjax){
+            $key = Yii::$app->request->post()['value'];
+        }
+        if($key == '10') {
+            return $this->renderAjax('_form_info_basic', [
+                'model' => $model,
+            ]);
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->save();
+        }
+
         return $this->render('index', [
             'model' => $model,
         ]);
     }
+
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
