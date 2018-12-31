@@ -1,5 +1,5 @@
 <?php
-/* @var $model \common\models\User */
+/* @var $model \frontend\models\ProfileForm */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
                         </div>
                         <div class="table-row">
                             <div class="table-cell"><?php echo Yii::t('vi', 'Giới tính') ?></div>
-                            <div class="table-cell">: <?php echo $model->sex ?></div>
+                            <div class="table-cell">: <?php echo $model->sex_string ?></div>
                         </div>
                         <div class="table-row">
                             <div class="table-cell"><?php echo Yii::t('vi', 'Email') ?></div>

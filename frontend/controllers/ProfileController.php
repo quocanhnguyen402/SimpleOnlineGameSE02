@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\ProfileForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -71,7 +72,18 @@ class ProfileController extends Controller
         if($identify == 0) {
             $identify = Yii::$app->user->identity->getId();
         }
-        $model = $this->findModel($identify);
+        $user = $this->findModel($identify);
+        $model = new ProfileForm();
+        $model->id       = $user->id;
+        $model->username = $user->username;
+        $model->birthday = $user->birthday;
+        $model->sex      = $user->sex;
+        if ($model->sex == 1) {
+            $model->sex_string = Yii::t('vi', 'Nữ');
+        } else {
+            $model->sex_string = Yii::t('vi', 'Nam');
+        }
+        $model->email    = $user->email;
 
         if(Yii::$app->request->isAjax){
             $key = Yii::$app->request->post()['value'];
@@ -83,7 +95,8 @@ class ProfileController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->save();
+            $model->update();
+            return $this->redirect('profile');
         }
 
         return $this->render('index', [
