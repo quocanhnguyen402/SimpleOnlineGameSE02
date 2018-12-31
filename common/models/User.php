@@ -13,7 +13,7 @@ use yii\web\IdentityInterface;
  * @property integer $id
  * @property string $username
  * @property string $avatar_part
- * @property string $sex
+ * @property integer $sex
  * @property string $birthday
  * @property string $password_hash
  * @property string $password_reset_token
@@ -58,7 +58,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['email'], 'unique'],
-            [['sex'], 'string', 'max' => 3],
+            [['sex'], 'integer'],
             [['birthday'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
