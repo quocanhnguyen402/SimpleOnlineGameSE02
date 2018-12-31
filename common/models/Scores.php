@@ -79,6 +79,30 @@ class Scores extends base\Scores
     }
 
     /**
+     * Lấy ra một mảng chứa thông tin về top điểm cao nhất mỗi game của người dùng nhất định
+     *
+     * @param int $user_id
+     *
+     * @return array ActiveRecord Objects
+     */
+    public static function getUserLeaderBoard($user_id){
+        $list = self::find()
+            ->join('left outer join',
+                'scores s2',
+                'scores.user_id = s2.user_id and scores.game_id = s2.game_id and scores.score<s2.score')
+            ->andWhere([
+                ['not', ['s2.user_id' => null] ],
+                'scores.user_id' => $user_id
+            ])
+            ->orderBy([
+                'scores.game_id' => SORT_ASC
+            ])
+            ->all();
+
+        return $list;
+    }
+
+    /**
      * Lấy ra một mảng chứa thông tin về top 10 điểm cao của game dựa trên game_id trong tuần này
      *
      * @param int $game_id
@@ -182,6 +206,8 @@ class Scores extends base\Scores
 
         return $list;
     }
+
+
 
 
 }
