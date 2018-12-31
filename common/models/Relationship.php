@@ -29,13 +29,13 @@ class Relationship extends base\Relationship
      *
      * @return array ActiveRecord Objects
      */
-    public function getFriendsList(){
+    public static function getFriendsList(){
         $user_id = Yii::$app->user->identity->getId();
 
         $list = self::find()
             ->andWhere([
-                'status' => self::STATUS_ACCEPTED,
-                'user_id' => $user_id
+                'relationship.status' => self::STATUS_ACCEPTED,
+                'relationship.user_id' => $user_id
             ])
             ->innerJoin('user','relationship.user_id = user.id')
             ->orderBy('user.username')
@@ -50,7 +50,7 @@ class Relationship extends base\Relationship
      *
      * @return array ActiveRecord Objects
      */
-    public function getFriendsRequest(){
+    public static function getFriendsRequest(){
         $user_id = Yii::$app->user->identity->getId();
 
         $list = self::find()
@@ -70,7 +70,7 @@ class Relationship extends base\Relationship
      *
      * @return array ActiveRecord Objects
      */
-    public function getBlackList(){
+    public static function getBlackList(){
         $user_id = Yii::$app->user->identity->getId();
 
         $list = self::find()
@@ -92,7 +92,7 @@ class Relationship extends base\Relationship
      *
      * @return boolean|int - hoặc là false, hoặc là trạng thái quan hệ
      */
-    public function getRelationship($other_id){
+    public static function getRelationship($other_id){
         $user_id = Yii::$app->user->identity->getId();
 
         $rel = self::findOne([
@@ -112,7 +112,7 @@ class Relationship extends base\Relationship
      *
      * @return boolean
      */
-    public function addFriendRequest($other_id){
+    public static function addFriendRequest($other_id){
         $user_id = Yii::$app->user->identity->getId();
         if ($other_id == $user_id)
             return false;
@@ -155,7 +155,7 @@ class Relationship extends base\Relationship
      *
      * @return boolean
      */
-    public function acceptFriendRequest($other_id) {
+    public static function acceptFriendRequest($other_id) {
         $user_id = Yii::$app->user->identity->getId();
         if ($other_id == $user_id)
             return false;
@@ -184,7 +184,7 @@ class Relationship extends base\Relationship
      *
      * @return boolean
      */
-    public function declineFriendRequest($other_id){
+    public static function declineFriendRequest($other_id){
         $user_id = Yii::$app->user->identity->getId();
         if ($other_id == $user_id)
             return false;
@@ -217,7 +217,7 @@ class Relationship extends base\Relationship
      *
      * @return boolean
      */
-    public function unfriend($other_id){
+    public static function unfriend($other_id){
         $user_id = Yii::$app->user->identity->getId();
         if ($other_id == $user_id)
             return false;
@@ -251,7 +251,7 @@ class Relationship extends base\Relationship
      *
      * @return boolean
      */
-    public function block($other_id){
+    public static function block($other_id){
         $user_id = Yii::$app->user->identity->getId();
         if ($other_id == $user_id)
             return false;
@@ -286,7 +286,7 @@ class Relationship extends base\Relationship
      *
      * @return boolean
      */
-    public function unblock($other_id) {
+    public static function unblock($other_id) {
         $user_id = Yii::$app->user->identity->getId();
         if ($other_id == $user_id)
             return false;
