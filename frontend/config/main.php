@@ -44,6 +44,22 @@ return [
             ],
         ],
 
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'enableSwiftMailerLogging' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'hmdntcmnqa@gmail.com',
+                'password' => 'minhntc123',
+                'port' => '465',
+                'encryption' => 'ssl',
+//                'port' => '587',
+//                'encryption' => 'tls',
+            ],
+        ],
+
     ],
     'params' => $params,
 ];
