@@ -34,10 +34,9 @@ class ProfileForm extends Model
             [['nickname', 'email'], 'required'],
             [['nickname', 'email'], 'filter', 'filter' => 'trim' ],
             [['nickname', 'email'], 'string', 'max' => 255],
-            [['nickname', 'email'], 'unique'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
             [['birthday'], 'safe'],
             [['sex'], 'integer'],
-            [['email'], 'unique'],
         ];
     }
 
@@ -46,12 +45,27 @@ class ProfileForm extends Model
      */
     public function attributeLabels() {
         return [
-
+            'nickname'   => Yii::t('vi', 'Tên'),
+            'birthday'   => Yii::t('vi', 'Ngày sinh'),
+            'sex'        => Yii::t('vi', 'Giới tính'),
+            'sex_string' => Yii::t('vi', 'Giới tính'),
+            'email'      => Yii::t('vi', 'Email')
         ];
     }
 
 
     public function update() {
+        if ( !$this->validate() ) {
+            return null;
+        }
+
+        $this->updateUser();
+
+        return true;
+    }
+
+    private function updateUser()
+    {
         $model = $this->findModel($this->id);
         $model->nickname = $this->nickname;
         $model->birthday = $this->birthday;
@@ -63,6 +77,8 @@ class ProfileForm extends Model
         $model->email    = $this->email;
 
         $model->save();
+
+        return $model;
     }
 
     protected function findModel( $id ) {

@@ -90,9 +90,6 @@ class ProfileController extends Controller
         $model->email    = $user->email;
 
         if(Yii::$app->request->isAjax){
-            $key = Yii::$app->request->post()['value'];
-        }
-        if($key == '10') {
             return $this->renderAjax('_form_info_basic', [
                 'model' => $model,
             ]);
