@@ -1,14 +1,14 @@
 <?php
 use yii\widgets\ActiveForm;
 
-/* @var $model \common\models\User */
+/* @var $model \frontend\models\ProfileForm */
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
 <div class="table">
     <div class="table-row">
-        <div class="table-cell"><?php echo Yii::t('vi', 'Username') ?></div>
-        <div class="table-cell"><?php echo $form->field($model, 'username')->textInput()->label(false) ?></div>
+        <div class="table-cell"><?php echo Yii::t('vi', 'Tên') ?></div>
+        <div class="table-cell"><?php echo $form->field($model, 'nickname')->textInput()->label(false) ?></div>
     </div>
     <div class="table-row">
         <div class="table-cell"><?php echo Yii::t('vi', 'Ngày sinh') ?></div>

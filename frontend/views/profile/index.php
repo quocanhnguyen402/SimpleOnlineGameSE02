@@ -2,6 +2,7 @@
 /* @var $model \common\models\User */
 
 $this->registerCssFile('@web/css/profile.css', ['depends' => [common\assets\AdminLte::className()]]);
+$this->registerCssFile('@web/css/beauty_textselect.css', ['depends' => [common\assets\AdminLte::className()]]);
 $this->registerJsFile('@web/js/profile.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 

@@ -10,7 +10,7 @@ use common\models\User;
  * User model
  *
  * @property integer $id
- * @property string $username
+ * @property string $nickname
  * @property integer $sex
  * @property string $sex_string
  * @property string $birthday
@@ -20,7 +20,7 @@ use common\models\User;
 class ProfileForm extends Model
 {
     public $id;
-    public $username;
+    public $nickname;
     public $birthday;
     public $sex;
     public $sex_string;
@@ -31,10 +31,10 @@ class ProfileForm extends Model
      */
     public function rules() {
         return [
-            [['username', 'email'], 'required'],
-            [['username', 'email'], 'filter', 'filter' => 'trim' ],
-            [['username', 'email'], 'string', 'max' => 255],
-            [['username'], 'unique'],
+            [['nickname', 'email'], 'required'],
+            [['nickname', 'email'], 'filter', 'filter' => 'trim' ],
+            [['nickname', 'email'], 'string', 'max' => 255],
+            [['nickname', 'email'], 'unique'],
             [['birthday'], 'safe'],
             [['sex'], 'integer'],
             [['email'], 'unique'],
@@ -53,7 +53,7 @@ class ProfileForm extends Model
 
     public function update() {
         $model = $this->findModel($this->id);
-        $model->username = $this->username;
+        $model->nickname = $this->nickname;
         $model->birthday = $this->birthday;
         if ($this->sex == 0 || $this->sex == 1) {
             $model->sex = $this->sex;
