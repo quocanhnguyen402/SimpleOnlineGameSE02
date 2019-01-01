@@ -12,7 +12,7 @@ class m190101_151639_add_nickname_column_to_user_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('user', 'nickname', 'date AFTER username');
+        $this->addColumn('user', 'nickname', 'string AFTER username');
     }
 
     /**
