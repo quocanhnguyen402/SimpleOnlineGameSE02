@@ -12,6 +12,7 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $username
+ * @property string $nickname
  * @property string $avatar_part
  * @property integer $sex
  * @property string $birthday
@@ -55,9 +56,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email'], 'required'],
-            [['username', 'email'], 'string', 'max' => 255],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
+            [['username', 'email', 'nickname'], 'filter', 'filter' => 'trim'],
+            [['username', 'email', 'nickname'], 'string', 'max' => 255],
+            [['username', 'email'], 'unique'],
             [['sex'], 'integer'],
             [['birthday'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
