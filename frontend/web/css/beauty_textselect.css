@@ -1,0 +1,53 @@
+::selection {
+    background:#d2d6de;
+    color:#fff;
+}
+
+::-moz-selection {
+    background:#d2d6de;
+    color:#fff;
+}
+
+::-webkit-selection {
+    background:#d2d6de;
+    color:#fff;
+}
+
+.box-success ::selection {
+    background:#00A65B;
+    color:#fff;
+}
+.box-success ::-moz-selection {
+    background:#00A65B;
+    color:#fff;
+}
+.box-success ::-webkit-selection {
+    background:#00A65B;
+    color:#fff;
+}
+
+.box-warning ::selection {
+    background:#f39c12;
+    color:#fff;
+}
+.box-warning ::-moz-selection {
+    background:#f39c12;
+    color:#fff;
+}
+.box-warning ::-webkit-selection {
+    background:#f39c12;
+    color:#fff;
+}
+
+.box-primary ::selection {
+    background:#3c8dbc;
+    color:#fff;
+}
+.box-primary ::-moz-selection {
+    background:#3c8dbc;
+    color:#fff;
+}
+.box-primary ::-webkit-selection {
+    background:#3c8dbc;
+    color:#fff;
+}

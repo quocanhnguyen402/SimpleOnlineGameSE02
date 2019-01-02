@@ -2,7 +2,6 @@
 /* @var $model \frontend\models\ProfileForm */
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 ?>
 <div class="col-md-12 table-responsive info-basic">
     <div class="box box-success">
@@ -26,8 +25,8 @@ use yii\widgets\ActiveForm;
                 <div class="profile-info">
                     <div class="table">
                         <div class="table-row">
-                            <div class="table-cell"><?php echo Yii::t('vi', 'Username') ?></div>
-                            <div class="table-cell">: <?php echo $model->username ?></div>
+                            <div class="table-cell"><?php echo Yii::t('vi', 'Tên') ?></div>
+                            <div class="table-cell">: <?php echo $model->nickname ?></div>
                         </div>
                         <div class="table-row">
                             <div class="table-cell"><?php echo Yii::t('vi', 'Ngày sinh') ?></div>

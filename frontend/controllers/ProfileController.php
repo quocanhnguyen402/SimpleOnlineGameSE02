@@ -75,7 +75,11 @@ class ProfileController extends Controller
         $user = $this->findModel($identify);
         $model = new ProfileForm();
         $model->id       = $user->id;
-        $model->username = $user->username;
+        if(!empty($user->nickname)) {
+            $model->nickname = $user->nickname;
+        } else {
+            $model->nickname = $user->username;
+        }
         $model->birthday = $user->birthday;
         $model->sex      = $user->sex;
         if ($model->sex == 1) {
@@ -86,9 +90,6 @@ class ProfileController extends Controller
         $model->email    = $user->email;
 
         if(Yii::$app->request->isAjax){
-            $key = Yii::$app->request->post()['value'];
-        }
-        if($key == '10') {
             return $this->renderAjax('_form_info_basic', [
                 'model' => $model,
             ]);

@@ -6,6 +6,13 @@
 .avatar img{
     height: 100%;
 }
+.block-select {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
 .logo {
     font-family: fontawesome;
     text-decoration: none;
@@ -29,6 +36,11 @@
     background: transparent;
 }
 .nav-custom{
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     position: relative;
     z-index: 2;
     font-size: 17px;
@@ -202,6 +214,11 @@
     font-weight: bold;
 }
 .top{
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     position: relative;
     background-color: #ffffff;
     height: 68px;
