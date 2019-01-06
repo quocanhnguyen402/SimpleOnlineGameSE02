@@ -98,7 +98,7 @@ class ProfileController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             if(!$model->update()) {
-                Yii::$app->session->setFlash('error', Html::errorSummary($model, ['header' => '<i class="icon fa fa-times-circle"></i>' . Yii::t("vi", "Lỗi") . ': ']));
+                Yii::$app->session->setFlash('profile-error', Html::errorSummary($model, ['header' => '<i class="icon fa fa-times-circle"></i>' . Yii::t("vi", "Lỗi") . ': ']));
             }
             return $this->redirect('profile');
         }
