@@ -13,6 +13,14 @@
     -o-user-select: none;
     user-select: none;
 }
+.flash-error{
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    border-radius: 5px;
+    padding: 10px 20px 5px!important;
+    margin: 0 0 15px 0;
+}
 .logo {
     font-family: fontawesome;
     text-decoration: none;

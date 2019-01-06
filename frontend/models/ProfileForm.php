@@ -34,7 +34,6 @@ class ProfileForm extends Model
             [['nickname', 'email'], 'required'],
             [['nickname', 'email'], 'filter', 'filter' => 'trim' ],
             [['nickname', 'email'], 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
             [['birthday'], 'safe'],
             [['sex'], 'integer'],
         ];
@@ -56,7 +55,7 @@ class ProfileForm extends Model
 
     public function update() {
         if ( !$this->validate() ) {
-            return null;
+            return false;
         }
 
         $this->updateUser();
@@ -74,7 +73,6 @@ class ProfileForm extends Model
         } else {
             $model->sex = 0;
         }
-        $model->email    = $this->email;
 
         $model->save();
 

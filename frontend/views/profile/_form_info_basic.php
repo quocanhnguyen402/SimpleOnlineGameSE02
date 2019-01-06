@@ -24,9 +24,5 @@ use yii\widgets\ActiveForm;
                 1 => 'Nữ',
             ])->label(false) ?></div>
     </div>
-    <div class="table-row">
-        <div class="table-cell"><?php echo Yii::t('vi', 'Email') ?></div>
-        <div class="table-cell"><?php echo $form->field($model, 'email')->label(false) ?></div>
-    </div>
 </div>
 <?php ActiveForm::end(); ?>

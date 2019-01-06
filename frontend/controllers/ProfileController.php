@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use frontend\models\ProfileForm;
 use Yii;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
@@ -96,7 +97,9 @@ class ProfileController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->update();
+            if(!$model->update()) {
+                Yii::$app->session->setFlash('error', Html::errorSummary($model, ['header' => '<i class="icon fa fa-times-circle"></i>' . Yii::t("vi", "Lỗi") . ': ']));
+            }
             return $this->redirect('profile');
         }
 
