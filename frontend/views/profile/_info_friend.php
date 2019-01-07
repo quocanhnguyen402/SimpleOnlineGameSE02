@@ -38,6 +38,9 @@ $('#friend-tab .bar-item').on('click', function(event) {
 	$('.context-menu').remove();
 	htmlString = '<div class="context-menu" style="display:none;left: ' + x + 'px; top: ' + y + 'px"><div class="context-menu-content" id="invite">Mời vào phòng</div><div class="context-menu-content" id="break">Hủy kết bạn</div><div class="context-menu-content" id="block">Chặn</div></div>';
 	$(this).append(htmlString);
+	if(($(this).width() - x) < $('.context-menu').width() + 10) {
+	    $('.context-menu').css('left', $(this).width() - $('.context-menu').width() + 'px');
+	}
 	$('.context-menu').fadeIn(200);
 })
 SCRIPT;
