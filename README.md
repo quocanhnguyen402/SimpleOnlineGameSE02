@@ -17,7 +17,10 @@
     - https://getcomposer.org/download/1.8.0/composer.phar   
 
 ###Hướng dẫn cài đặt
-1. Clone project về thông qua link: git@github.com:Natashi402/SimpleOnlineGameSE02.git
+1. Clone project về máy
+```$xslt
+git clone https://github.com/Natashi402/SimpleOnlineGameSE02.git
+```
 2. Chạy command
 ```$xslt
 composer install
@@ -25,7 +28,6 @@ php yii migrate
 cd nodejs
 npm install --save express socket.io
 ```
-
 3. Configure cho Apache 
     - Thêm vào httpd-vhost.conf, với <Đường dẫn> thay bằng đường dẫn thực tế tới project
     ```$xslt
