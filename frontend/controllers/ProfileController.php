@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Relationship;
 use frontend\models\ProfileForm;
 use Yii;
 use yii\helpers\Html;
@@ -69,7 +70,6 @@ class ProfileController extends Controller
      */
     public function actionIndex($identify = 0)
     {
-        $key = '';
         if($identify == 0) {
             $identify = Yii::$app->user->identity->getId();
         }
@@ -103,8 +103,15 @@ class ProfileController extends Controller
             return $this->redirect('profile');
         }
 
+        $friendArea = [
+            'friend'  => $this->getList('friend'),
+            'request' => $this->getList('request'),
+            'block'   => $this->getList('block'),
+        ];
+
         return $this->render('index', [
             'model' => $model,
+            'friendArea' => $friendArea,
         ]);
     }
 
@@ -122,5 +129,38 @@ class ProfileController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    private function getList($listType) {
+        $listFriend = [];
+
+        if($listType == 'friend') {
+            $arrFriend = Relationship::getFriendsList();
+        } elseif ($listType == 'request') {
+            $arrFriend = Relationship::getFriendsRequest();
+        } elseif ($listType == 'block') {
+            $arrFriend = Relationship::getBlackList();
+        } else {
+            $arrFriend = [];
+        }
+
+        foreach ($arrFriend as $friend) {
+            $friendId = $friend->other_id;
+            if( ($model = User::findOne( ['id' => $friendId] )) !== null ) {
+                if ( !empty($model->nickname) ) {
+                    $friendName = $model->nickname;
+                } else {
+                    $friendName = $model->username;
+                }
+                $friendAvatar = $model->avatar_part;
+                $friendItem = [
+                    'name' => $friendName,
+                    'part' => $friendAvatar
+                ];
+                $listFriend[] = $friendItem;
+            }
+        }
+
+        return $listFriend;
     }
 }
