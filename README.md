@@ -26,6 +26,37 @@ cd nodejs
 npm install --save express socket.io
 ```
 
+3. Configure cho Apache 
+    - Thêm vào httpd-vhost.conf, với <Đường dẫn> thay bằng đường dẫn thực tế tới project
+    ```$xslt
+        <VirtualHost *:80>
+                ServerName dev.mygame.com
+                DocumentRoot "<Đường dẫn>/SimpleOnlineGameSE02/frontend/web"
+                   
+                <Directory "<Đường dẫn>/SimpleOnlineGameSE02/frontend/web">
+        			# use mod_rewrite for pretty URL support
+                    RewriteEngine on
+                    # If a directory or a file exists, use the request directly
+                    RewriteCond %{REQUEST_FILENAME} !-f
+                    RewriteCond %{REQUEST_FILENAME} !-d
+                    # Otherwise forward the request to index.php
+                    RewriteRule . index.php
+        			 
+                    # use index.php as index file
+                    DirectoryIndex index.php
+        
+                    # ...other settings...
+        			Require all granted
+        			
+                </Directory>
+            </VirtualHost>
+    ```
+
+    - Thêm vào file hosts
+    ```$xslt
+    127.0.0.1 dev.mygame.com
+    ```
+
 ###Khởi chạy websocket client server 
 ```$xslt
 cd nodejs
