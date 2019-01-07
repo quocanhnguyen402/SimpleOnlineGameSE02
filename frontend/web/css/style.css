@@ -6,6 +6,16 @@
 .avatar img{
     height: 100%;
 }
+.bar-item{
+    display: table;
+    width: 100%;
+    direction:ltr;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 3px;
+    margin: 3px 0 3px 0;
+    height: 60px;
+}
 .block-select {
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -20,6 +30,39 @@
     border-radius: 5px;
     padding: 10px 20px 5px!important;
     margin: 15px;
+}
+.flash-success{
+    color: #2a8426;
+    background: #eafdeb;
+    border-left: 3px solid #caeed0;
+    padding: 10px 20px 10px!important;
+    margin: 15px;
+}
+.flash-warning{
+    color: #7f6532;
+    background: #fffbe5;
+    border-left: 3px solid #e8c33f;
+    padding: 10px 20px 10px!important;
+    margin: 15px;
+}
+.friend-avatar{
+    display: table-cell;
+    float: left;
+    border: solid rgba(0,0,0,0.2) 1px;
+    border-radius: 100%;
+    width: 54px;
+    height: 54px;
+}
+.friend-avatar .img {
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+}
+.friend-name{
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+    padding: 15px;
 }
 .logo {
     font-family: fontawesome;
@@ -70,6 +113,9 @@
 .nav-custom .icon-bar{
     background: #f1f1f1;
 }
+.pointer{
+    cursor: pointer!important;
+}
 .site-body{
     margin-left: 60px;
 }
@@ -78,7 +124,6 @@
     background: white;
     height: 100%;
     width: 60px;
-    /*right: 17px;*/
     right: 0;
     border-left: solid 1px rgba(0,0,0,0.2);
     z-index: 1001;
@@ -106,37 +151,8 @@
     border-radius: 10px;
     background-color: #F5F5F5;
 }
-.side-bar .list .bar-item{
-    display: table;
-    width: 100%;
-    direction:ltr;
-    cursor: pointer;
-    white-space: nowrap;
-    padding: 3px;
-    margin: 3px 0 3px 0;
-    height: 60px;
-}
 .side-bar .list .bar-item:hover{
     background: rgba(0,0,0,0.1);
-}
-.side-bar .list .bar-item .friend-avatar{
-    display: table-cell;
-    float: left;
-    border: solid rgba(0,0,0,0.2) 1px;
-    border-radius: 100%;
-    width: 54px;
-    height: 54px;
-}
-.side-bar .list .bar-item .friend-avatar .img {
-    border-radius: 100%;
-    width: 100%;
-    height: 100%;
-}
-.side-bar .list .bar-item .friend-name{
-    display: table-cell;
-    width: 100%;
-    vertical-align: middle;
-    padding: 15px;
 }
 .side-bar .title{
     overflow-x: hidden;
