@@ -30,7 +30,10 @@ class Relationship extends base\Relationship
      * @return array ActiveRecord Objects
      */
     public static function getFriendsList(){
-        $user_id = Yii::$app->user->identity->getId();
+        if (Yii::$app->user->identity)
+            $user_id = Yii::$app->user->identity->getId();
+        else
+            return false;
 
         $list = self::find()
             ->andWhere([
