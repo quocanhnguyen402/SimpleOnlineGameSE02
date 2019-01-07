@@ -32,14 +32,16 @@ $(document).on('click', function(e) {
 	}
 })
 $('#friend-tab .bar-item').on('click', function(event) {
-	var rect = event.target.getBoundingClientRect();
-	var x = event.clientX - rect.left;
-	var y = event.clientY - rect.top;
+	var x = event.clientX - $(this).offset().left;
+	var y = event.clientY - $(this).offset().top;
 	$('.context-menu').remove();
 	htmlString = '<div class="context-menu" style="display:none;left: ' + x + 'px; top: ' + y + 'px"><div class="context-menu-content" id="invite">Mời vào phòng</div><div class="context-menu-content" id="break">Hủy kết bạn</div><div class="context-menu-content" id="block">Chặn</div></div>';
 	$(this).append(htmlString);
 	if(($(this).width() - x) < $('.context-menu').width() + 10) {
-	    $('.context-menu').css('left', $(this).width() - $('.context-menu').width() + 'px');
+	    $('.context-menu').css('left', x - $('.context-menu').width() + 'px');
+	}
+	if($('.list-friend').height() - (event.clientY - $('.list-friend').offset().top) < $('.context-menu').height() + 10) {
+	    $('.context-menu').css('top', y - $('.context-menu').height() + 'px');
 	}
 	$('.context-menu').fadeIn(200);
 })
