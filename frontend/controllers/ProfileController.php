@@ -99,6 +99,8 @@ class ProfileController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if(!$model->update()) {
                 Yii::$app->session->setFlash('profile-error', Html::errorSummary($model, ['header' => '<i class="icon fa fa-times-circle"></i>' . Yii::t("vi", "Lỗi") . ': ']));
+            } else {
+                Yii::$app->session->setFlash('profile-success', '<ul><li>' . Yii::t('vi','Lưu thông tin cá nhân thành công') . '</li></ul>');
             }
             return $this->redirect('profile');
         }
