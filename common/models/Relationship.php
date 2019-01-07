@@ -122,12 +122,12 @@ class Relationship extends base\Relationship
 
         $rel_1 = self::findOne([
             'user_id' => $user_id,
-            '$other_id' => $other_id,
+            'other_id' => $other_id,
         ]);
 
         $rel_2 = self::findOne([
             'user_id' => $other_id,
-            '$other_id' => $user_id,
+            'other_id' => $user_id,
         ]);
 
         if (isset($rel_1) && isset($rel_2)){
