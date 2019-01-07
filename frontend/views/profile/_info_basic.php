@@ -21,6 +21,12 @@ use yii\helpers\Html;
                 <?php echo Yii::$app->session->getFlash( 'profile-error' ) ?>
             </div>
         <?php endif; ?>
+        <?php if ( Yii::$app->session->hasFlash( 'profile-success' ) ): ?>
+            <div class="alert flash-success">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <?php echo Yii::$app->session->getFlash( 'profile-success' ) ?>
+            </div>
+        <?php endif; ?>
 
         <div class="box-body">
             <div class="col-md-12 basic-info">
