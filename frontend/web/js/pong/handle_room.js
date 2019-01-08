@@ -1,5 +1,5 @@
 //Create new socket
-var socket = io();
+var socket = io.connect("http://dev.mygame.com:5000/");
 //connect control
 var connected = false;
 var position = 0;
@@ -48,7 +48,7 @@ socket.on('joined', function (room) {
     $('#room_info').html("You joined room:<b>" + room + "<b>");
     $('#room_info').show();
     //Change connect state to true
-    // connected = true;
+    connected = true;
     //Change position to 2
     position = 2;
 });
