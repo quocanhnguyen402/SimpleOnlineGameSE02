@@ -156,6 +156,7 @@ class ProfileController extends Controller
                 }
                 $friendAvatar = $model->avatar_part;
                 $friendItem = [
+                    'id'   => $friendId,
                     'name' => $friendName,
                     'part' => $friendAvatar
                 ];
