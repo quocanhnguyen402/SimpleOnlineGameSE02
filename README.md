@@ -31,7 +31,7 @@ php init //Chọn dev
 ```$xslt
 php yii migrate
 cd nodejs
-npm install --save express socket.io
+npm install
 ```
 4. Configure cho Apache Server
     - Thêm vào httpd-vhost.conf, với <Đường dẫn> thay bằng đường dẫn thực tế tới project
