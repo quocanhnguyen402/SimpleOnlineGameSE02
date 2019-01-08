@@ -1,0 +1,21 @@
+{
+  "name": "server_node_se02",
+  "version": "1.0.0",
+  "description": "server nodejs for the SimpleOnlineGamesSE02 web",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Natashi",
+  "license": "ISC"
+}

@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->registerJsFile("/socket.io/socket.io.js", [
+$this->registerJsFile("/js/socket.io.js", [
         'position' => \yii\web\View::POS_END
 ]);
 
