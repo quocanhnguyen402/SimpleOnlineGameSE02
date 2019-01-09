@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 
 $this->registerCssFile("/css/chess/chessboard-0.3.0.min.css");
-// $this->registerCssFile("/css/chess/chess_game_page.css");
+ $this->registerCssFile("/css/chess/chess_game_page.css");
 
 $this->registerJsFile("/js/chess/chess.js", [
     'position' => yii\web\View::POS_END
