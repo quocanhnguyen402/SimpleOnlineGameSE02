@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'se02_game'
+    database: 'mygame'
 });
 connection.connect()
 
