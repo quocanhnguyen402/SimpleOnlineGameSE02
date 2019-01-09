@@ -85,7 +85,49 @@ function initOption() {
     })
 }
 SCRIPT;
+$addFriend = <<< SCRIPT
+$('.add-friend').on('click', function(e) {
+    $('#add-friend').modal('show');
+})
+$('.btn-add-friend').on('click', function(e) {
+    var name = $(this).parent().children('input').val();
+    $.ajax({
+        type: "POST",
+        data: {value:name},
+        url: "/relationship/add-friend-request",
+        success: function(msg){
+            console.log(msg);
+        },
+        error: function(msg){}
+    });
+})
+$('.accept').on('click', function(e) {
+    var value = $(this).parent().parent().attr('id').replace('fr-','');
+    $.ajax({
+        type: "POST",
+        data: {value:value},
+        url: "/relationship/accept-friend-request",
+        success: function(msg){
+            console.log(msg);
+        },
+        error: function(msg){}
+    });
+})
+$('.decline').on('click', function(e) {
+    var value = $(this).parent().parent().attr('id').replace('fr-','');
+    $.ajax({
+        type: "POST",
+        data: {value:value},
+        url: "/relationship/decline-friend-request",
+        success: function(msg){
+            console.log(msg);
+        },
+        error: function(msg){}
+    });
+})
+SCRIPT;
 
+$this->registerJs($addFriend, \yii\web\View::POS_END);
 $this->registerJs($changeTab, \yii\web\View::POS_END);
 $this->registerJs($searchFriendArea, \yii\web\View::POS_END);
 $this->registerJs($actionOption, \yii\web\View::POS_END);
@@ -94,6 +136,18 @@ $this->registerJs($option, \yii\web\View::POS_END);
 <div class="col-md-12 table-responsive info-friend">
     <div class="box box-primary">
         <div class="box-header with-border">
+            <?php if ( Yii::$app->session->hasFlash( 'friend-error' ) ): ?>
+                <div class="alert flash-error">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    <?php echo Yii::$app->session->getFlash( 'friend-error' ) ?>
+                </div>
+            <?php endif; ?>
+            <?php if ( Yii::$app->session->hasFlash( 'friend-success' ) ): ?>
+                <div class="alert flash-success">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    <?php echo Yii::$app->session->getFlash( 'friend-success' ) ?>
+                </div>
+            <?php endif; ?>
             <h3>
                 <i class="fa fa-users text-primary"></i>
                 &nbsp;<?php echo Yii::t('vi', 'Bạn bè') ?>
@@ -106,10 +160,11 @@ $this->registerJs($option, \yii\web\View::POS_END);
                     <a class="w3-bar-item w3-button tab w3-dark-grey" id="friend"><?= Yii::t('vi', 'Friend') ?></a>
                     <a class="w3-bar-item w3-button tab" id="request"><?= Yii::t('vi', 'Request') ?></a>
                     <a class="w3-bar-item w3-button tab" id="block"><?= Yii::t('vi', 'Block') ?></a>
+                    <a class="add-friend w3-bar-item pull-right pointer text-black"><span class="fa fa-user-plus"></span></a>
                 </div>
                 <div id="friend-tab" class="w3-container tab-content w3-animate-opacity" style="display: block;">
                     <div class="list-friend list-area">
-                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['friend'] ] ) ?>
+                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['friend'], 'view' => 0  ] ) ?>
                     </div>
                     <div class="search">
                         <?php echo Html::input('text','search-box') ?>
@@ -118,7 +173,7 @@ $this->registerJs($option, \yii\web\View::POS_END);
                 </div>
                 <div id="request-tab" class="w3-container tab-content w3-animate-opacity" style="display: none;">
                     <div class="list-request list-area">
-                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['request'] ] ) ?>
+                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['request'], 'view' => 1 ] ) ?>
                     </div>
                     <div class="search">
                         <?php echo Html::input('text','search-box') ?>
@@ -127,7 +182,7 @@ $this->registerJs($option, \yii\web\View::POS_END);
                 </div>
                 <div id="block-tab" class="w3-container tab-content w3-animate-opacity" style="display: none;">
                     <div class="list-request list-area">
-                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['block'] ] ) ?>
+                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['block'], 'view' => 2  ] ) ?>
                     </div>
                     <div class="search">
                         <?php echo Html::input('text','search-box') ?>
