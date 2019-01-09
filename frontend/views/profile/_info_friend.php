@@ -58,7 +58,7 @@ function initOption() {
         // Do something
     });
     $('#break-btn').on('click', function(e) {
-        if( confirm($breakMessage + name) ) {
+        if( confirm($breakMessage) ) {
             $.ajax({
                 type: "POST",
                 data: {value:value},
@@ -71,7 +71,7 @@ function initOption() {
         }
     });
     $('#block-btn').on('click', function(e) {
-        if( confirm($blockMessage + name) ) {
+        if( confirm($blockMessage) ) {
             $.ajax({
                 type: "POST",
                 data: {value:value},
@@ -119,6 +119,32 @@ $('.decline').on('click', function(e) {
         type: "POST",
         data: {value:value},
         url: "/relationship/decline-friend-request",
+        success: function(msg){
+            console.log(msg);
+        },
+        error: function(msg){}
+    });
+})
+$('.un-friend').on('click', function(e) {
+    var value = $(this).parent().parent().attr('id').replace('fr-','');
+    if( confirm($breakMessage) ) {
+        $.ajax({
+            type: "POST",
+            data: {value:value},
+            url: "/relationship/un-friend",
+            success: function(msg){
+                console.log(msg);
+            },
+            error: function(msg){}
+        });
+    }
+})
+$('.un-block').on('click', function(e) {
+    var value = $(this).parent().parent().attr('id').replace('fr-','');
+    $.ajax({
+        type: "POST",
+        data: {value:value},
+        url: "/relationship/un-block",
         success: function(msg){
             console.log(msg);
         },

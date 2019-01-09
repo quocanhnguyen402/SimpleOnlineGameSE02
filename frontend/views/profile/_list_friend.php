@@ -18,6 +18,14 @@
                 <span class="fa fa-check text-success btn accept" style="background-color: #f4f4f4;border-color: #ddd;"></span>
                 <span class="fa fa-remove text-danger btn decline" style="background-color: #f4f4f4;border-color: #ddd;"></span>
             </div>
+            <?php } elseif ($view == 0) { ?>
+                <div class="pull-right">
+                    <span class="fa fa-remove btn un-friend" style="background-color: #f4f4f4;border-color: #ddd;"></span>
+                </div>
+            <?php } elseif ($view == 2) { ?>
+                <div class="pull-right">
+                    <span class="fa fa-remove btn un-block" style="background-color: #f4f4f4;border-color: #ddd;"></span>
+                </div>
             <?php } ?>
         </div>
     </div>

@@ -37,7 +37,7 @@ class RelationshipController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'add-friend-request' => ['POST'],
-//                    'accept-friend-request' => ['POST'],
+                    'accept-friend-request' => ['POST'],
                     'decline-friend-request' => ['POST'],
                     'un-friend' => ['POST'],
                     'block' => ['POST'],
@@ -127,48 +127,66 @@ class RelationshipController extends Controller
     }
 
     public function actionUnFriend(){
+        $error = 1;
         if (Yii::$app->request->isAjax) {
             if( isset(Yii::$app->request->post()['value']) ) {
                 $id = Yii::$app->request->post()['value'];
-                if(is_array($id) || !Relationship::unfriend($id)) {
-                    // do something
-                    return null;
+                if(!is_array($id)) {
+                    $error = 0;
                 }
-                return $this->redirect('/profile/index');
+                if(!Relationship::unfriend($id)){
+                    $error = 1;
+                }
             }
-            return null;
         }
-        return null;
+        if( $error == 1 ) {
+            Yii::$app->session->setFlash('friend-error', '<ul><li>Oops! Có lỗi xảy ra, hãy thử lại</li></ul>');
+        } else {
+            Yii::$app->session->setFlash('friend-success', '<ul><li>Hủy kết bạn thành công</li></ul>');
+        }
+        return $this->redirect('/profile/index');
     }
 
     public function actionBlock(){
+        $error = 1;
         if (Yii::$app->request->isAjax) {
             if( isset(Yii::$app->request->post()['value']) ) {
                 $id = Yii::$app->request->post()['value'];
-                if(is_array($id) || !Relationship::block($id)) {
-                    // do something
-                    return null;
+                if(!is_array($id)) {
+                    $error = 0;
                 }
-                return $this->redirect('/profile/index');
+                if(!Relationship::block($id)){
+                    $error = 1;
+                }
             }
-            return null;
         }
-        return null;
+        if( $error == 1 ) {
+            Yii::$app->session->setFlash('friend-error', '<ul><li>Oops! Có lỗi xảy ra, hãy thử lại</li></ul>');
+        } else {
+            Yii::$app->session->setFlash('friend-success', '<ul><li>Chặn thành công</li></ul>');
+        }
+        return $this->redirect('/profile/index');
     }
 
     public function actionUnBlock(){
+        $error = 1;
         if (Yii::$app->request->isAjax) {
             if( isset(Yii::$app->request->post()['value']) ) {
                 $id = Yii::$app->request->post()['value'];
-                if(is_array($id) || !Relationship::unblock($id)) {
-                    // do something
-                    return null;
+                if(!is_array($id)) {
+                    $error = 0;
                 }
-                return $this->redirect('/profile/index');
+                if(!Relationship::unblock($id)){
+                    $error = 1;
+                }
             }
-            return null;
         }
-        return null;
+        if( $error == 1 ) {
+            Yii::$app->session->setFlash('friend-error', '<ul><li>Oops! Có lỗi xảy ra, hãy thử lại</li></ul>');
+        } else {
+            Yii::$app->session->setFlash('friend-success', '<ul><li>Hủy chặn thành công</li></ul>');
+        }
+        return $this->redirect('/profile/index');
     }
 
     /**
