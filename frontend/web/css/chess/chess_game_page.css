@@ -1,26 +1,14 @@
-/* board */
-.board-b72b1 {
-    min-width: 200px;
-    max-width: 800px;
-    width: 55%!important;
-    margin-left: 50%;
-    transform: translateX(-50%);
-}
-/* square */
-.square-55d63 {
-    position: relative;
-    width: 12.5%!important;
-    padding-top: 12.5%!important;
-    height: unset!important;
+.board {
+    width: 400px;
+    margin: auto
 }
 
-/* piece */
-.piece-417db {
-    max-width: 150px;
-    max-height: 150px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%!important;
-    height: 100%!important;
+.info {
+    width: 400px;
+    margin: auto;
+}
+
+.move-history {
+    max-height: 100px;
+    overflow-y: scroll;
 }
