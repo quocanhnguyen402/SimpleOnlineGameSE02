@@ -10,11 +10,9 @@ use yii\widgets\Breadcrumbs;
 use yii\widgets\ListView;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-use common\models\Relationship;
 
 AppAsset::register($this);
 $this->title = 'SimpleGameOnline';
-$listFriend = Relationship::getFriendsList();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -90,7 +88,7 @@ $listFriend = Relationship::getFriendsList();
         </div>
         <div class="list">
 
-            <?php echo  $this->render('_friend-list', ['listFriend' => $listFriend]) ?>
+            <?php echo  $this->render('_friend-list') ?>
 
         </div>
         <div class="side-bar-footer"></div>
@@ -140,7 +138,15 @@ $listFriend = Relationship::getFriendsList();
         }
     })
     $('.list').css('height', ($('.side-bar').height() - 93 - 125) + 'px');
+    if($(document).innerHeight() > window.innerHeight) {
+        $('.side-bar').css('right','17px');
+    }
     window.addEventListener('resize', function(event) {
+        if($(document).innerHeight() > window.innerHeight) {
+            $('.side-bar').css('right','17px');
+        } else {
+            $('.side-bar').css('right','');
+        }
         if($('body').scrollTop() < 125) {
             $('.list').css('height', ($('.side-bar').height() - 93 - (125 - $('body').scrollTop())) + 'px');
         } else {

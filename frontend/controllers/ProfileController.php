@@ -133,7 +133,7 @@ class ProfileController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    private function getList($listType) {
+    public static function getList($listType) {
         $listFriend = [];
 
         if($listType == 'friend') {
@@ -156,6 +156,7 @@ class ProfileController extends Controller
                 }
                 $friendAvatar = $model->avatar_part;
                 $friendItem = [
+                    'id'   => $friendId,
                     'name' => $friendName,
                     'part' => $friendAvatar
                 ];

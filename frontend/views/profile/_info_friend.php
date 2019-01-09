@@ -2,6 +2,9 @@
 use yii\helpers\Html;
 /* @var $friendArea \frontend\controllers\ProfileController::actionIndex() */
 
+$breakMessage = json_encode(Yii::t('vi', 'Bạn có chắc muốn hủy kết bạn với '));
+$blockMessage = json_encode(Yii::t('vi', 'Bạn có chắc muốn chặn '));
+
 $changeTab = <<< SCRIPT
 $('.info-friend .tab').on('click', function(e){
     $('.info-friend-container .tab-content').css('display', 'none');
@@ -35,7 +38,7 @@ $('#friend-tab .bar-item').on('click', function(event) {
 	var x = event.clientX - $(this).offset().left;
 	var y = event.clientY - $(this).offset().top;
 	$('.context-menu').remove();
-	htmlString = '<div class="context-menu" style="display:none;left: ' + x + 'px; top: ' + y + 'px"><div class="context-menu-content" id="invite">Mời vào phòng</div><div class="context-menu-content" id="break">Hủy kết bạn</div><div class="context-menu-content" id="block">Chặn</div></div>';
+	htmlString = '<div class="context-menu" style="display:none;left: ' + x + 'px; top: ' + y + 'px"><div class="context-menu-content" id="invite-btn">Mời vào phòng</div><div class="context-menu-content" id="break-btn">Hủy kết bạn</div><div class="context-menu-content" id="block-btn">Chặn</div></div>';
 	$(this).append(htmlString);
 	if(($(this).width() - x) < $('.context-menu').width() + 10) {
 	    $('.context-menu').css('left', x - $('.context-menu').width() + 'px');
@@ -43,16 +46,49 @@ $('#friend-tab .bar-item').on('click', function(event) {
 	if($('.list-friend').height() - (event.clientY - $('.list-friend').offset().top) < $('.context-menu').height() + 10) {
 	    $('.context-menu').css('top', y - $('.context-menu').height() + 'px');
 	}
+	initOption();
 	$('.context-menu').fadeIn(200);
 })
 SCRIPT;
 $actionOption = <<< SCRIPT
-
+function initOption() {
+    var value = $('.list-friend .context-menu').parent().children('.friend-name').attr('id').replace('fr-', '');
+    var name = $('.list-friend .context-menu').parent().children('.friend-name').html();
+    $('#invite-btn').on('click', function(e) {
+        // Do something
+    });
+    $('#break-btn').on('click', function(e) {
+        if( confirm($breakMessage + name) ) {
+            $.ajax({
+                type: "POST",
+                data: {value:value},
+                url: "/relationship/un-friend",
+                success: function(msg){
+                    console.log(msg);
+                },
+                error: function(msg){}
+            });
+        }
+    });
+    $('#block-btn').on('click', function(e) {
+        if( confirm($blockMessage + name) ) {
+            $.ajax({
+                type: "POST",
+                data: {value:value},
+                url: "/relationship/block",
+                success: function(msg){
+                    console.log(msg);
+                },
+                error: function(msg){}
+            });
+        }
+    })
+}
 SCRIPT;
-
 
 $this->registerJs($changeTab, \yii\web\View::POS_END);
 $this->registerJs($searchFriendArea, \yii\web\View::POS_END);
+$this->registerJs($actionOption, \yii\web\View::POS_END);
 $this->registerJs($option, \yii\web\View::POS_END);
 ?>
 <div class="col-md-12 table-responsive info-friend">
@@ -73,18 +109,7 @@ $this->registerJs($option, \yii\web\View::POS_END);
                 </div>
                 <div id="friend-tab" class="w3-container tab-content w3-animate-opacity" style="display: block;">
                     <div class="list-friend list-area">
-                        <?php if(empty($friendArea['friend'])) {?>
-                            <p><?php echo Yii::t('vi', 'Danh sách bạn bè trống') ?></p>
-                        <?php } ?>
-                        <?php foreach ($friendArea['friend'] as $friend) { ?>
-                            <div class="bar-item">
-                                <div class="friend-avatar">
-                                    <img class="img" src="https://png.pngtree.com/svg/20161027/service_default_avatar_182956.png">
-<!--                                <img class="img" src="--><?php //echo $friend['part'] ?><!--">-->
-                                </div>
-                                <div class="friend-name"><?php echo $friend['name'] ?></div>
-                            </div>
-                        <?php } ?>
+                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['friend'] ] ) ?>
                     </div>
                     <div class="search">
                         <?php echo Html::input('text','search-box') ?>
@@ -93,18 +118,7 @@ $this->registerJs($option, \yii\web\View::POS_END);
                 </div>
                 <div id="request-tab" class="w3-container tab-content w3-animate-opacity" style="display: none;">
                     <div class="list-request list-area">
-                        <?php if(empty($friendArea['request'])) {?>
-                            <p><?php echo Yii::t('vi', 'Danh sách yêu cầu kết bạn trống') ?></p>
-                        <?php } ?>
-                        <?php foreach ($friendArea['request'] as $friend) { ?>
-                            <div class="bar-item">
-                                <div class="friend-avatar">
-                                    <img class="img" src="https://png.pngtree.com/svg/20161027/service_default_avatar_182956.png">
-<!--                                <img class="img" src="--><?php //echo $friend['part'] ?><!--">-->
-                                </div>
-                                <div class="friend-name"><?php echo $friend['name'] ?></div>
-                            </div>
-                        <?php } ?>
+                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['request'] ] ) ?>
                     </div>
                     <div class="search">
                         <?php echo Html::input('text','search-box') ?>
@@ -113,18 +127,7 @@ $this->registerJs($option, \yii\web\View::POS_END);
                 </div>
                 <div id="block-tab" class="w3-container tab-content w3-animate-opacity" style="display: none;">
                     <div class="list-request list-area">
-                        <?php if(empty($friendArea['block'])) {?>
-                            <p><?php echo Yii::t('vi', 'Danh sách chặn trống') ?></p>
-                        <?php } ?>
-                        <?php foreach ($friendArea['block'] as $friend) { ?>
-                            <div class="bar-item">
-                                <div class="friend-avatar">
-                                    <img class="img" src="https://png.pngtree.com/svg/20161027/service_default_avatar_182956.png">
-<!--                                <img class="img" src="--><?php //echo $friend['part'] ?><!--">-->
-                                </div>
-                                <div class="friend-name"><?php echo $friend['name'] ?></div>
-                            </div>
-                        <?php } ?>
+                        <?php echo $this->render( '_list_friend', [ 'arrFriend' => $friendArea['block'] ] ) ?>
                     </div>
                     <div class="search">
                         <?php echo Html::input('text','search-box') ?>
