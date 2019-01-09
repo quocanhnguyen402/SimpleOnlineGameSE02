@@ -10,8 +10,12 @@ var sleep;
 $('#modal').on('hidden.bs.modal', function(hideEvt) {
     $(".modal-body").html("");
 })
-$('.game-item').on('click', function(e) {
-    var value = $(this).attr('id').replace('g-','');
+$('.play-game').on('click', function(play){
+    var value = $(this).parent().attr('id').replace('g-','');
+    location.replace('/games/play?game=' + value);
+})
+$('.game-thumbnail').on('click', function(e) {
+    var value = $(this).parent().attr('id').replace('g-','');
     $.ajax({
         type: "POST",
         data: {value:value},
