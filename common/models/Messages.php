@@ -11,23 +11,26 @@ class Messages extends base\Messages
     CONST PAGINATION = 10;
 
     /**
-     * Gửi tin nhắn cho người khác
+     * Gửi tin nhắn từ người dùng này tới người dùng khác
      *
+     * @param int $from_id - user_id của người gửi
      * @param int $to_id - user_id của người nhận
      * @param stirng $message - tin nhắn
      *
      * @return int|boolean  true nếu lưu vào db thành công, false nếu lưu thất bại,
-     * -1 nếu không tìm thấy người nhận, 0 nếu nội dung tin nhắn trống
+     * -1 nếu không tìm thấy người nhận hoặc người gửi, 0 nếu nội dung tin nhắn trống
      */
-    public static function sendMessage($to_id, $message){
+    public static function sendMessage($from_id, $to_id, $message){
         $form = new Messages();
-        $form->from_id = Yii::$app->user->identity->getId();
-        if (!User::findOne($to_id))
+
+        if (!User::findOne($from_id) || !User::findOne($to_id))
             return -1;
-        $form->to_id = $to_id;
 
         if (!$message)
             return 0;
+
+        $form->from_id = $from_id;
+        $form->to_id = $to_id;
         $form->message_body = $message;
 
         return $form->save();
