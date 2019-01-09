@@ -1,6 +1,8 @@
 <?php
 
 namespace common\models\base;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 use Yii;
 
@@ -47,6 +49,19 @@ class Messages extends \yii\db\ActiveRecord
             'to_id' => Yii::t('vi', 'To ID'),
             'message_body' => Yii::t('vi', 'Message Body'),
             'created_at' => Yii::t('vi', 'Created At'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
         ];
     }
 
