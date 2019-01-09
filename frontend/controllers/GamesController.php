@@ -44,7 +44,12 @@ class GamesController extends Controller
         return null;
     }
 
-    public function actionChess(){
+    public function actionPlay($game = 0){
+        $model = $this->findModel($game);
+        return $this->render($model->game_path);
+    }
+
+    protected function actionChess(){
         return $this->render('chess');
     }
 

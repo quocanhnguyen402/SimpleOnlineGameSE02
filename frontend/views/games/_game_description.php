@@ -1,9 +1,16 @@
 <?php
 
 /* @var $model common\models\Games */
+
+$playBtn = <<< SCRIPT
+$('.btn-play').on('click', function(play) {
+    location.replace('/games/play?game=' + $(this).parent().parent().parent().attr("id"));
+})
+SCRIPT;
+$this->registerJs($playBtn, yii\web\View::POS_END);
 ?>
 
-<div class="game-description">
+<div class="game-description" id="<?php echo $model->id ?>">
     <div class="left-content">
         <div class="game-title-area">
             <div class="game-icon">
