@@ -1,6 +1,7 @@
 /* board */
 .board-b72b1 {
     min-width: 200px;
+    max-width: 800px;
     width: 55%!important;
     margin-left: 50%;
     transform: translateX(-50%);

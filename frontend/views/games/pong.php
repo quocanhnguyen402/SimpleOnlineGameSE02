@@ -37,7 +37,7 @@ $this->registerJsFile("/js/pong/pong_game_script.js", [
             </div>
         </div>
         <div id="room_info"></div>
-        <div id="play_ground" style="width: 600px;" hidden></div>
+        <div id="play_ground" style="margin-left: 50%; transform: translateX(-50%)" hidden></div>
     </div>
     </div>
 </body>

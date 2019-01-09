@@ -29,7 +29,7 @@ $this->registerJsFile("/js/ztype/Asteroid.js", [
 ?>
 
 <body>
-    <div style="margin: auto auto;width: 1000px;">
+    <div style="margin: 15px auto;width: 1000px;">
         <table style="border: none">
             <tr>
                 <td style="margin-left:40px" rowspan="2">
