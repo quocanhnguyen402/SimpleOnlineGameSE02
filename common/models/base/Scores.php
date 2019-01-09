@@ -51,4 +51,17 @@ class Scores extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
 }

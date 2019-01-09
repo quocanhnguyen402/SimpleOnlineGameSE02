@@ -1,7 +1,9 @@
 <?php
 /* @var $model \common\models\User */
+/* @var $friendArea \frontend\controllers\ProfileController::actionIndex() */
 
 $this->registerCssFile('@web/css/profile.css', ['depends' => [common\assets\AdminLte::className()]]);
+$this->registerCssFile('@web/css/beauty_textselect.css', ['depends' => [common\assets\AdminLte::className()]]);
 $this->registerJsFile('@web/js/profile.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
@@ -9,11 +11,11 @@ $this->registerJsFile('@web/js/profile.js', ['depends' => [\yii\web\JqueryAsset:
     <div class="profile-container">
         <div class="row">
             <div class="col-md-7">
-                <?php echo $this->render( '_info_basic', ['model' => $model] ) ?>
+                <?php echo $this->render( '_info_basic', [ 'model' => $model ] ) ?>
                 <?php echo $this->render( '_info_score' ) ?>
             </div>
             <div class="col-md-5">
-                <?php echo $this->render( '_info_friend' ) ?>
+                <?php echo $this->render( '_info_friend', [ 'friendArea' => $friendArea ] ) ?>
             </div>
         </div>
     </div>

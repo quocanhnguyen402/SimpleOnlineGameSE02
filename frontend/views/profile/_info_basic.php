@@ -1,8 +1,7 @@
 <?php
-/* @var $model \common\models\User */
+/* @var $model \frontend\models\ProfileForm */
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 ?>
 <div class="col-md-12 table-responsive info-basic">
     <div class="box box-success">
@@ -16,6 +15,19 @@ use yii\widgets\ActiveForm;
             </h3>
         </div>
 
+        <?php if ( Yii::$app->session->hasFlash( 'profile-error' ) ): ?>
+            <div class="alert flash-error">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <?php echo Yii::$app->session->getFlash( 'profile-error' ) ?>
+            </div>
+        <?php endif; ?>
+        <?php if ( Yii::$app->session->hasFlash( 'profile-success' ) ): ?>
+            <div class="alert flash-success">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <?php echo Yii::$app->session->getFlash( 'profile-success' ) ?>
+            </div>
+        <?php endif; ?>
+
         <div class="box-body">
             <div class="col-md-12 basic-info">
                 <div class="profile-avatar w3-center">
@@ -26,8 +38,8 @@ use yii\widgets\ActiveForm;
                 <div class="profile-info">
                     <div class="table">
                         <div class="table-row">
-                            <div class="table-cell"><?php echo Yii::t('vi', 'Username') ?></div>
-                            <div class="table-cell">: <?php echo $model->username ?></div>
+                            <div class="table-cell"><?php echo Yii::t('vi', 'Tên') ?></div>
+                            <div class="table-cell">: <?php echo $model->nickname ?></div>
                         </div>
                         <div class="table-row">
                             <div class="table-cell"><?php echo Yii::t('vi', 'Ngày sinh') ?></div>
@@ -35,7 +47,7 @@ use yii\widgets\ActiveForm;
                         </div>
                         <div class="table-row">
                             <div class="table-cell"><?php echo Yii::t('vi', 'Giới tính') ?></div>
-                            <div class="table-cell">: <?php echo $model->sex ?></div>
+                            <div class="table-cell">: <?php echo $model->sex_string ?></div>
                         </div>
                         <div class="table-row">
                             <div class="table-cell"><?php echo Yii::t('vi', 'Email') ?></div>

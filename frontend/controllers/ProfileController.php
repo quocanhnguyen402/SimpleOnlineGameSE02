@@ -1,7 +1,10 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Relationship;
+use frontend\models\ProfileForm;
 use Yii;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
@@ -67,27 +70,50 @@ class ProfileController extends Controller
      */
     public function actionIndex($identify = 0)
     {
-        $key = '';
         if($identify == 0) {
             $identify = Yii::$app->user->identity->getId();
         }
-        $model = $this->findModel($identify);
+        $user = $this->findModel($identify);
+        $model = new ProfileForm();
+        $model->id       = $user->id;
+        if(!empty($user->nickname)) {
+            $model->nickname = $user->nickname;
+        } else {
+            $model->nickname = $user->username;
+        }
+        $model->birthday = $user->birthday;
+        $model->sex      = $user->sex;
+        if ($model->sex == 1) {
+            $model->sex_string = Yii::t('vi', 'Nữ');
+        } else {
+            $model->sex_string = Yii::t('vi', 'Nam');
+        }
+        $model->email    = $user->email;
 
         if(Yii::$app->request->isAjax){
-            $key = Yii::$app->request->post()['value'];
-        }
-        if($key == '10') {
             return $this->renderAjax('_form_info_basic', [
                 'model' => $model,
             ]);
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->save();
+            if(!$model->update()) {
+                Yii::$app->session->setFlash('profile-error', Html::errorSummary($model, ['header' => '<i class="icon fa fa-times-circle"></i>' . Yii::t("vi", "Lỗi") . ': ']));
+            } else {
+                Yii::$app->session->setFlash('profile-success', '<ul><li>' . Yii::t('vi','Lưu thông tin cá nhân thành công') . '</li></ul>');
+            }
+            return $this->redirect('profile');
         }
+
+        $friendArea = [
+            'friend'  => $this->getList('friend'),
+            'request' => $this->getList('request'),
+            'block'   => $this->getList('block'),
+        ];
 
         return $this->render('index', [
             'model' => $model,
+            'friendArea' => $friendArea,
         ]);
     }
 
@@ -105,5 +131,39 @@ class ProfileController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public static function getList($listType) {
+        $listFriend = [];
+
+        if($listType == 'friend') {
+            $arrFriend = Relationship::getFriendsList();
+        } elseif ($listType == 'request') {
+            $arrFriend = Relationship::getFriendsRequest();
+        } elseif ($listType == 'block') {
+            $arrFriend = Relationship::getBlackList();
+        } else {
+            $arrFriend = [];
+        }
+
+        foreach ($arrFriend as $friend) {
+            $friendId = $friend->other_id;
+            if( ($model = User::findOne( ['id' => $friendId] )) !== null ) {
+                if ( !empty($model->nickname) ) {
+                    $friendName = $model->nickname;
+                } else {
+                    $friendName = $model->username;
+                }
+                $friendAvatar = $model->avatar_part;
+                $friendItem = [
+                    'id'   => $friendId,
+                    'name' => $friendName,
+                    'part' => $friendAvatar
+                ];
+                $listFriend[] = $friendItem;
+            }
+        }
+
+        return $listFriend;
     }
 }

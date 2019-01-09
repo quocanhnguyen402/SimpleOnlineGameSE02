@@ -1,0 +1,7 @@
+suite_namespace: common\tests\coverage
+actor: UnitTester
+bootstrap: false
+modules:
+    enabled:
+        - Yii2:
+            part: fixtures
