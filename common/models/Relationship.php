@@ -14,6 +14,7 @@ class Relationship extends base\Relationship
     const STATUS_DECLINED = 2;
     const STATUS_BLOCKED = 3;
     const STATUS_BE_BLOCKED = 4;
+    const STATUS_WAITED = 5; // chờ được kết bạn
 
 
 //    public function getFriend(Relationship $rel){
@@ -144,7 +145,7 @@ class Relationship extends base\Relationship
             $rel_2->other_id = $user_id;
         }
 
-        $rel_1->status = self::STATUS_PENDING;
+        $rel_1->status = self::STATUS_WAITED;
         $rel_2->status = self::STATUS_PENDING;
 
         return $rel_1->save() && $rel_2->save();
@@ -173,7 +174,7 @@ class Relationship extends base\Relationship
         $rel_2 = Relationship::findOne([
             'user_id' => $other_id,
             'other_id' => $user_id,
-            'status' => self::STATUS_PENDING
+            'status' => self::STATUS_WAITED
         ]);
         $rel_2->status = self::STATUS_ACCEPTED;
 
@@ -201,14 +202,14 @@ class Relationship extends base\Relationship
         $rel_2 = Relationship::findOne([
             'user_id' => $other_id,
             'other_id' => $user_id,
-            'status' => self::STATUS_PENDING
+            'status' => self::STATUS_WAITED
         ]);
 
         if ( !isset($rel_1) || !isset($rel_2))
             return false;
 
-        $rel_1->status = self::STATUS_ACCEPTED;
-        $rel_2->status = self::STATUS_ACCEPTED;
+        $rel_1->status = self::STATUS_DECLINED;
+        $rel_2->status = self::STATUS_DECLINED;
 
         return $rel_1->save() && $rel_2->save();
     }
@@ -269,11 +270,18 @@ class Relationship extends base\Relationship
             'other_id' => $user_id,
         ]);
 
-        if ( !isset($rel_1) || !isset($rel_2))
-            return false;
+        if (isset($rel_1) && isset($rel_2)){
+            if ($rel_1->status == self::STATUS_BLOCKED || $rel_2->status == self::STATUS_BLOCKED)
+                return false;
+        } else {
+            $rel_1 = new Relationship();
+            $rel_1->user_id = $user_id;
+            $rel_1->other_id = $other_id;
 
-        if ($rel_1->status == self::STATUS_BLOCKED || $rel_2->status == self::STATUS_BLOCKED)
-            return false;
+            $rel_2 = new Relationship();
+            $rel_2->user_id = $other_id;
+            $rel_2->other_id = $user_id;
+        }
 
         $rel_1->status = self::STATUS_BLOCKED;
         $rel_2->status = self::STATUS_BE_BLOCKED;

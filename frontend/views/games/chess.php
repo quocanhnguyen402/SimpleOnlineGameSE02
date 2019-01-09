@@ -2,14 +2,14 @@
 
 /* @var $this yii\web\View */
 
-$this->registerCssFile("/css/chess/chessboard-0.3.0.min.css");
- $this->registerCssFile("/css/chess/chess_game_page.css");
+$this->registerCssFile("/css/chess/chessboard-0.3.0.css");
+$this->registerCssFile("/css/chess/chess_game_page.css");
 
 $this->registerJsFile("/js/chess/chess.js", [
     'position' => yii\web\View::POS_END
 ]);
 
-$this->registerJsFile("/js/chess/chessboard-0.3.0.min.js", [
+$this->registerJsFile("/js/chess/chessboard-0.3.0.js", [
     'position' => yii\web\View::POS_END
 ]);
 
@@ -39,5 +39,5 @@ $this->registerJsFile("/js/chess/chess_game_page.js", [
         </div>
     </div>
     <div id="room_info"></div>
-    <div id="gameboard" hidden></div>
+    <div id="gameboard" hidden style="width: 750px;margin: 0 auto;"></div>
 </div>

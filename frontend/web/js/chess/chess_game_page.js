@@ -20,6 +20,7 @@ var initGame = function (orientation) {
         onDragStart: onDragStart,
         orientation: orientation,
         dropOffBoard: 'snapback', // this is the default
+        pieceTheme:'/img/chesspieces/wikipedia/{piece}.png',
     };
     //Make the board
     board = new ChessBoard('gameboard', cfg);
