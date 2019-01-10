@@ -39,5 +39,5 @@ $this->registerJsFile("/js/chess/chess_game_page.js", [
         </div>
     </div>
     <div id="room_info"></div>
-    <div id="gameboard" hidden style="width: 750px;margin: 0 auto;"></div>
+    <div id="gameboard" hidden style="width: 35%;margin: 0 auto;"></div>
 </div>
