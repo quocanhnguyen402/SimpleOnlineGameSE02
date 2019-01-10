@@ -33,3 +33,10 @@ $this->registerJsFile('@web/js/profile.js', ['depends' => [\yii\web\JqueryAsset:
     <span class="btn btn-add-friend fa fa-user-plus"></span>
 </div>
 <?php Modal::end(); ?>
+<?php Modal::begin([
+    'closeButton' => false,
+    'size'        => 'modal-lg',
+    'id'          => 'search-friend',
+])
+?>
+<?php Modal::end(); ?>
