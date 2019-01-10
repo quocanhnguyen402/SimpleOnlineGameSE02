@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/Natashi402/SimpleOnlineGameSE02.svg?branch=master)](https://travis-ci.com/Natashi402/SimpleOnlineGameSE02)
 # SimpleOnlineGameSE02
 
 ### Mục đích
