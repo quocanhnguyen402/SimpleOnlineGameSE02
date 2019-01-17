@@ -67,12 +67,9 @@ class RelationshipController extends Controller
         $error = 1;
         if (Yii::$app->request->isAjax) {
             if( isset(Yii::$app->request->post()['value']) ) {
-                $name = Yii::$app->request->post()['value'];
-                if ( !is_array($name) && ($model = User::findOne([ 'username' => trim($name) ])) !== null ) {
-                    $id = $model->id;
-                    if(Relationship::addFriendRequest($id)) {
-                        $error = 0;
-                    }
+                $id = Yii::$app->request->post()['value'];
+                if(Relationship::addFriendRequest($id)) {
+                    $error = 0;
                 }
             }
         }
@@ -187,6 +184,22 @@ class RelationshipController extends Controller
             Yii::$app->session->setFlash('friend-success', '<ul><li>Hủy chặn thành công</li></ul>');
         }
         return $this->redirect('/profile/index');
+    }
+
+    public function actionGetFriendSearch() {
+        $error = 1;
+        if(Yii::$app->request->isAjax) {
+            if( isset(Yii::$app->request->post()['value']) ) {
+                $text = Yii::$app->request->post()['value'];
+                if(!is_array($text)) {
+//                    $text = 'adm';
+                    $error = 0;
+                    if( ($model = User::find()->where(['like', 'username', $text])->asArray()->all()) !== null ) {
+                        return $this->renderAjax('/profile/_list_search', ['listFriend' => $model]);
+                    }
+                }
+            }
+        }
     }
 
     /**
