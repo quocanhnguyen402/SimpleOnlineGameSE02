@@ -89,18 +89,6 @@ $addFriend = <<< SCRIPT
 $('.add-friend').on('click', function(e) {
     $('#add-friend').modal('show');
 })
-$('.btn-add-friend').on('click', function(e) {
-    var name = $(this).parent().children('input').val();
-    $.ajax({
-        type: "POST",
-        data: {value:name},
-        url: "/relationship/add-friend-request",
-        success: function(msg){
-            console.log(msg);
-        },
-        error: function(msg){}
-    });
-})
 $('.accept').on('click', function(e) {
     var value = $(this).parent().parent().attr('id').replace('fr-','');
     $.ajax({
@@ -147,6 +135,31 @@ $('.un-block').on('click', function(e) {
         url: "/relationship/un-block",
         success: function(msg){
             console.log(msg);
+        },
+        error: function(msg){}
+    });
+})
+$('.btn-add-friend').on('click', function(e) {
+    var name = $(this).parent().children('input').val();
+    $.ajax({
+        type: "POST",
+        data: {value:name},
+        url: "/relationship/get-friend-search",
+        success: function(msg){
+            $('#search-friend').find('.modal-body').html(msg);
+            $('.search-friend').on('click', function(e) {
+                var name = $(this).find('.friend-name').attr('id');
+                $.ajax({
+                    type: "POST",
+                    data: {value:name},
+                    url: "/relationship/add-friend-request",
+                    success: function(msg){
+                        console.log(msg);
+                    },
+                    error: function(msg){}
+                });
+            })
+            $('#search-friend').modal('show');
         },
         error: function(msg){}
     });
